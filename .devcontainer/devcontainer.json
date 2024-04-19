@@ -1,5 +1,5 @@
 {
-  "name": Praktikum_Mikrocontroller",
+  "name": "Praktikum_Mikrocontroller",
   "build": {
     "dockerfile": "Dockerfile"
   },
