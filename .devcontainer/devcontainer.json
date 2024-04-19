@@ -1,0 +1,22 @@
+{
+  "name": Praktikum_Mikrocontroller",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "containerEnv": {
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
+    "GITHUB_USER": "${localEnv:GITHUB_USER}",
+    "DISPLAY": ":0",
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/mnt/wslg/runtime-dir",
+    "PULSE_SERVER": "/mnt/wslg/PulseServer"
+  },
+  "runArgs": [
+    "--name=Praktikum_Mikrocontroller",
+    "-v", "/run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix",
+    "-v", "/run/desktop/mnt/host/wslg:/mnt/wslg"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+  }
+}
