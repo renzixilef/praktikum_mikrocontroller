@@ -34,7 +34,7 @@ RUN git config --global core.filemode false
 RUN git config --global core.autocrlf true
 
 # openocd install
-RUN apt-get install openocd
+RUN apt-get install -y openocd
 
 ENV PATH="/opt/arm-gnu-toolchain/bin:${PATH}"
 
