@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 set(DEVICE_FAMILY STM32F40_41xxx)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE   STATIC_LIBRARY)
 
 project(
         MirkoController
@@ -24,6 +25,8 @@ set_target_properties(MirkoController PROPERTIES OUTPUT_NAME "MirkoController" S
 
 target_include_directories(MirkoController PRIVATE
         Core/Inc
+        Drivers/CMSIS/Device/ST/STM32F0xx/Include
+        Drivers/CMSIS/Include
         Drivers/STM32F4xx_HAL_Driver/Inc
         Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
 )
