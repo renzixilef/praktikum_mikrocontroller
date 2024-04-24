@@ -74,5 +74,11 @@ target_link_options(MirkoController PRIVATE
 
 add_custom_command(TARGET MirkoController
         POST_BUILD
+        COMMAND arm-none-eabi-size MirkoController.elf
+)
+
+add_custom_command(TARGET MirkoController
+        POST_BUILD
         COMMAND arm-none-eabi-objcopy -O ihex MirkoController.elf ${PROJECT_NAME}.hex
-        COMMAND arm-none-eabi-objcopy -O binary MirkoController.elf ${PROJECT_NAME}.bin)
+        COMMAND arm-none-eabi-objcopy -O binary MirkoController.elf ${PROJECT_NAME}.bin
+)
