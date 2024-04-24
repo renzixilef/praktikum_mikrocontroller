@@ -111,7 +111,7 @@ int main(void)
         TIM3->CCR4 = power;
         power ++;
         HAL_Delay(1000);
-        if (power>8){
+        if (power>10){
             power = 0;
             HAL_Delay(3000);
         }
