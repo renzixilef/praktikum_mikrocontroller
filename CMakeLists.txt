@@ -38,6 +38,7 @@ set_target_properties(MirkoController PROPERTIES OUTPUT_NAME "MirkoController" S
 
 target_include_directories(MirkoController PRIVATE
         Core/Inc
+        Core/SystemFiles/Inc
         Drivers/CMSIS/Device/ST/STM32F0xx/Include
         Drivers/CMSIS/Include
         Drivers/STM32F0xx_HAL_Driver/Inc
