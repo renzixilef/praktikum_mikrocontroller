@@ -45,13 +45,14 @@ namespace Sensors {
 
     class FXOS8700 {
     public:
+        explicit FXOS8700(const std::shared_ptr<I2C_HandleTypeDef>& thisI2cDev);
         void readAccelData();
         void readMagData();
     private:
-        FXOS8700Data accelSI;
-        FXOS8700Data magMicroT;
-        FXOS8700AccelRange currentAccelRange;
-        std::shared_ptr<I2C_HandleTypeDef> i2c_dev;
+        FXOS8700Data accelSI = {0,0,0};
+        FXOS8700Data magMicroT = {0,0,0};
+        FXOS8700AccelRange currentAccelRange = FXOS8700AccelRange::ACCEL_RANGE_2G;
+        std::shared_ptr<I2C_HandleTypeDef> i2cDev;
         void setStatus(FXOS8700Status status);
         void setSensorMode(FXOS8700Mode mode);
         void setAccelRange(FXOS8700AccelRange range);

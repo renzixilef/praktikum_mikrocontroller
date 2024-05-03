@@ -38,12 +38,13 @@ namespace Sensors {
 
     class FXAS21002 {
     public:
+        explicit FXAS21002(const std::shared_ptr<I2C_HandleTypeDef>& thisI2cDev);
         void readGyroData();
     private:
-        FXAS21002Data gyroSI;
-        FXAS21002GyroRange currentGyroRange;
-        FXAS21002Status currentStatus;
-        std::shared_ptr<I2C_HandleTypeDef> i2c_dev;
+        FXAS21002Data gyroSI = {0,0,0};
+        FXAS21002GyroRange currentGyroRange = FXAS21002GyroRange::GYRO_RANGE_250;
+        FXAS21002Status currentStatus = FXAS21002Status::STANDBY;
+        std::shared_ptr<I2C_HandleTypeDef> i2cDev;
         void setStatus(FXAS21002Status status);
         void setGyroRange(FXAS21002GyroRange range);
     };

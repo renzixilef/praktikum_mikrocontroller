@@ -1,19 +1,25 @@
 #include "../Inc/FXOS8700.h"
 
+Sensors::FXOS8700::FXOS8700(const std::shared_ptr<I2C_HandleTypeDef> &thisI2cDev) : i2cDev(thisI2cDev) {
+    setAccelRange(FXOS8700AccelRange::ACCEL_RANGE_2G);
+    setSensorMode(FXOS8700Mode::BOTH);
+    setStatus(FXOS8700Status::ACTIVE);
+}
+
 void Sensors::FXOS8700::setSensorMode(Sensors::FXOS8700Mode mode) {
     uint8_t buffer[2];
     buffer[0] = FXOS8700_M_CTRL_REG1;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2c_dev.get(), FXOS8700_ID, &buffer[1], 1, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXOS8700_ID, &buffer[1], 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
     buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(mode));
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 2, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 2, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -23,16 +29,16 @@ void Sensors::FXOS8700::setAccelRange(Sensors::FXOS8700AccelRange range) {
     uint8_t buffer[2];
     buffer[0] = FXOS8700_XYZ_DATA_CFG;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2c_dev.get(), FXOS8700_ID, &buffer[1], 1, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXOS8700_ID, &buffer[1], 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
     buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(range));
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 2, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 2, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -44,16 +50,16 @@ void Sensors::FXOS8700::setStatus(FXOS8700Status status) {
     uint8_t buffer[2];
     buffer[0] = FXOS8700_CTRL_REG1;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2c_dev.get(), FXOS8700_ID, &buffer[1], 1, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXOS8700_ID, &buffer[1], 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
     buffer[1] = (buffer[1] & 0xFE) | (static_cast<uint8_t>(status));
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 2, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 2, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -63,11 +69,11 @@ void Sensors::FXOS8700::readMagData() {
     uint8_t buffer[6];
     buffer[0] = FXOS8700_M_OUT_X_MSB;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2c_dev.get(), FXOS8700_ID, buffer, 6, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXOS8700_ID, buffer, 6, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -80,11 +86,11 @@ void Sensors::FXOS8700::readAccelData() {
     uint8_t buffer[6];
     buffer[0] = FXOS8700_OUT_X_MSB;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2c_dev.get(), FXOS8700_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXOS8700_ID, buffer, 1, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2c_dev.get(), FXOS8700_ID, buffer, 6, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXOS8700_ID, buffer, 6, 10);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -111,4 +117,5 @@ void Sensors::FXOS8700::readAccelData() {
                     FXOS8700_GRAVITATIONAL_CONSTANT;
     }
 }
+
 
