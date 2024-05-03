@@ -36,6 +36,7 @@ void Sensors::FXOS8700::setAccelRange(Sensors::FXOS8700AccelRange range) {
     if (err != HAL_OK) {
         // Error Handling here
     }
+    currentAccelRange = range;
 }
 
 

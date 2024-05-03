@@ -3,10 +3,7 @@
 #include <stm32f0xx_hal.h>
 #include <memory>
 
-#define FXOS8700_ID (0xC7)
-
 // accelerometer
-#define FXOS8700_STATUS (0x00)
 #define FXOS8700_OUT_X_MSB (0x01)
 #define FXOS8700_6_BIT_MASK (0x3F)
 #define FXOS8700_GRAVITATIONAL_CONSTANT (9.81F)
@@ -15,7 +12,6 @@
 #define FXOS8700_G_LSB_8G (0.000976F)
 
 // magnetometer
-#define FXOS8700_M_STATUS (0x32)
 #define FXOS8700_M_OUT_X_MSB (0x33)
 #define FXOS8700_MAG_UT_LSB (0.1F)
 
@@ -23,6 +19,7 @@
 #define FXOS8700_CTRL_REG1 (0x2A)
 #define FXOS8700_M_CTRL_REG1 (0x5B)
 #define FXOS8700_XYZ_DATA_CFG (0x0E)
+#define FXOS8700_ID (0xC7)
 
 namespace Sensors {
 
