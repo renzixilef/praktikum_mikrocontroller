@@ -1,4 +1,4 @@
-#include "../Inc/FXOS8700.h"
+#include "../Inc/FXOS8700.hpp"
 
 Sensors::FXOS8700::FXOS8700(const std::shared_ptr<I2C_HandleTypeDef> &thisI2cDev) : i2cDev(thisI2cDev) {
     setAccelRange(FXOS8700AccelRange::ACCEL_RANGE_2G);

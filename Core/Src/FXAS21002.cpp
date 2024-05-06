@@ -1,4 +1,4 @@
-#include "FXAS21002.h"
+#include "FXAS21002.hpp"
 
 
 Sensors::FXAS21002::FXAS21002(const std::shared_ptr<I2C_HandleTypeDef> &thisI2cDev) : i2cDev(thisI2cDev) {

@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "StateManager.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,7 +97,6 @@ int main(void)
     int power = 0;
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
-
     /* USER CODE END 2 */
 
     /* Infinite loop */

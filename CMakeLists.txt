@@ -21,12 +21,15 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ARM)
 set(CMAKE_SYSTEM_VERSION 1)
 
-set(CMAKE_TRY_COMPILE_TARGET_TYPE EXECUTABLE)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 file(GLOB_RECURSE SRC
-        Core/*.c
-        Core/*.s
-        Core/*.cpp
+        Core/Src/*.c
+        Core/Src/*.s
+        Core/Src/*.cpp
+        Core/SystemFiles/Src/*.c
+        Core/SystemFiles/Src/*.s
+        Core/SystemFiles/Src/*.cpp
         Drivers/*.c
         Drivers/*.cpp
         Drivers/*.s

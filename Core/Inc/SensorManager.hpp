@@ -2,8 +2,8 @@
 
 #include <memory>
 #include <stm32f0xx_hal.h>
-#include "FXAS21002.h"
-#include "FXOS8700.h"
+#include "FXAS21002.hpp"
+#include "FXOS8700.hpp"
 
 namespace Sensors {
     class SensorManager {
@@ -15,6 +15,9 @@ namespace Sensors {
 
         void initSensors(const std::shared_ptr<I2C_HandleTypeDef>& i2c_dev);
         void readSensors();
+        inline FXOS8700Data& getMagData(){return magAndAccSensor->magMicroT;}
+        inline FXOS8700Data& getAccData(){return magAndAccSensor->accelSI;}
+        inline FXAS21002Data& getGyroData(){return gyroSensor->gyroSI;}
 
         SensorManager(const SensorManager&) = delete;
         SensorManager& operator=(const SensorManager&) = delete;

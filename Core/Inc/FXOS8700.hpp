@@ -2,6 +2,7 @@
 
 #include <stm32f0xx_hal.h>
 #include <memory>
+#include <cmath>
 
 // accelerometer
 #define FXOS8700_OUT_X_MSB (0x01)
@@ -41,6 +42,9 @@ namespace Sensors {
         float x;
         float y;
         float z;
+        [[nodiscard]] float abs() const {
+            return std::sqrt(x*x + y*y + z*z);
+        }
     };
 
     class FXOS8700 {
@@ -48,9 +52,9 @@ namespace Sensors {
         explicit FXOS8700(const std::shared_ptr<I2C_HandleTypeDef>& thisI2cDev);
         void readAccelData();
         void readMagData();
-    private:
         FXOS8700Data accelSI = {0,0,0};
         FXOS8700Data magMicroT = {0,0,0};
+    private:
         FXOS8700AccelRange currentAccelRange = FXOS8700AccelRange::ACCEL_RANGE_2G;
         std::shared_ptr<I2C_HandleTypeDef> i2cDev;
         void setStatus(FXOS8700Status status);
