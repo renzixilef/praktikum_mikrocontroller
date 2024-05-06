@@ -59,7 +59,7 @@ target_compile_options(MirkoController PRIVATE
         -fstack-usage
         -Wall
         -g3
-        $<$<CONFIG:Debug>:-Og>
+        $<$<CONFIG:Debug>:-Os>
 )
 
 target_link_options(MirkoController PRIVATE

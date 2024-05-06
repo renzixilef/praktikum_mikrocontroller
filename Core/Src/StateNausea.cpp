@@ -16,10 +16,10 @@ void StateMachine::StateNausea::executeState() {
 
 StateMachine::StateType StateMachine::StateNausea::checkState() {
     Sensors::SensorManager& sensorManager = Sensors::SensorManager::getInstance();
-    float zAcc = sensorManager.getAccData().z;
+    float yAcc = sensorManager.getAccData().y;
     float totalMag = sensorManager.getMagData().abs();
     float yAngVel = std::abs(sensorManager.getGyroData().y);
-    if(zAcc >= SLEEP_Z_AXIS_ACCELERATION_THRESHOLD){
+    if(yAcc >= SLEEP_Z_AXIS_ACCELERATION_THRESHOLD){
         return StateType::STATE_SLEEP;
     }else if(yAngVel >= NAUSEA_Y_AXIS_ANGULAR_VELOCITY_THRESHOLD){
         return StateType::STATE_NAUSEA;

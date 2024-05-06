@@ -10,8 +10,8 @@ void StateMachine::StateSleep::executeState() {
 }
 
 StateMachine::StateType StateMachine::StateSleep::checkState() {
-    float z_acc = Sensors::SensorManager::getInstance().getAccData().z;
-    if(z_acc < SLEEP_Z_AXIS_ACCELERATION_THRESHOLD){
+    float y_acc = Sensors::SensorManager::getInstance().getAccData().y;
+    if(y_acc < SLEEP_Z_AXIS_ACCELERATION_THRESHOLD){
         return StateType::STATE_IDLE;
     }else{
         return StateType::STATE_SLEEP;
