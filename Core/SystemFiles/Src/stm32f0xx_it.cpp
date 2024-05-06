@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f0xx_it.h"
+#include "StateManager.hpp"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -150,7 +151,7 @@ void EXTI0_1_IRQHandler(void)
     /* USER CODE END EXTI0_1_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(B1_Pin);
     /* USER CODE BEGIN EXTI0_1_IRQn 1 */
-
+    StateMachine::StateManager::getInstance().pressButtonInterrupt();
     /* USER CODE END EXTI0_1_IRQn 1 */
 }
 

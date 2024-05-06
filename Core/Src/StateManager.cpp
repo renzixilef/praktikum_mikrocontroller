@@ -1,7 +1,10 @@
 #include "StateManager.hpp"
 
 void StateMachine::StateManager::pressButtonInterrupt() {
-
+    StateType currentStateStateType = currentState->getStateType();
+    if(currentStateStateType != StateType::STATE_NAUSEA && currentStateStateType!=StateType::STATE_SLEEP ){
+        StateCuddles().initState();
+    }
 }
 
 void StateMachine::StateManager::checkForStateTransition() {

@@ -94,9 +94,10 @@ int main(void)
     MX_TIM3_Init();
     MX_I2C1_Init();
     /* USER CODE BEGIN 2 */
-    int power = 0;
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+    Sensors::SensorManager::getInstance().initSensors(std::make_shared<I2C_HandleTypeDef>(hi2c1));
+    StateMachine::StateManager& stateManagerInstance = StateMachine::StateManager::getInstance();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -104,16 +105,9 @@ int main(void)
     while (1)
     {
         /* USER CODE END WHILE */
-
+        stateManagerInstance.checkForStateTransition();
         /* USER CODE BEGIN 3 */
-        TIM3->CCR3 = power;
-        TIM3->CCR4 = power;
-        power ++;
-        HAL_Delay(1000);
-        if (power>10){
-            power = 0;
-            HAL_Delay(3000);
-        }
+
     }
     /* USER CODE END 3 */
 }
@@ -233,7 +227,7 @@ static void MX_TIM3_Init(void)
     htim3.Instance = TIM3;
     htim3.Init.Prescaler = 0;
     htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim3.Init.Period = 10;
+    htim3.Init.Period = 20;
     htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
     if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
