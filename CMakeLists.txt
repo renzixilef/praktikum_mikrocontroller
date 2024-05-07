@@ -10,12 +10,12 @@ project(
         LANGUAGES C CXX ASM
 )
 
-set(CMAKE_C_COMPILER arm-none-eabi-gcc)
+set(CMAKE_C_COMPILER /opt/arm-gnu-toolchain/bin/arm-none-eabi-gcc)
 set(CMAKE_MAKE_PROGRAM makefile)
-set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
-set(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
-set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
-set(CMAKE_OBJDUMP arm-none-eabi-objdump)
+set(CMAKE_CXX_COMPILER /opt/arm-gnu-toolchain/bin/arm-none-eabi-g++)
+set(CMAKE_ASM_COMPILER /opt/arm-gnu-toolchain/bin/arm-none-eabi-gcc)
+set(CMAKE_OBJCOPY /opt/arm-gnu-toolchain/bin/arm-none-eabi-objcopy)
+set(CMAKE_OBJDUMP /opt/arm-gnu-toolchain/bin/arm-none-eabi-objdump)
 
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ARM)
@@ -30,6 +30,7 @@ file(GLOB_RECURSE SRC
         Core/SystemFiles/Src/*.c
         Core/SystemFiles/Src/*.s
         Core/SystemFiles/Src/*.cpp
+        Core/SystemFiles/Startup/*.s
         Drivers/*.c
         Drivers/*.cpp
         Drivers/*.s
@@ -78,11 +79,11 @@ target_link_options(MirkoController PRIVATE
 
 add_custom_command(TARGET MirkoController
         POST_BUILD
-        COMMAND arm-none-eabi-size MirkoController.elf
+        COMMAND /opt/arm-gnu-toolchain/bin/arm-none-eabi-size MirkoController.elf
 )
 
 add_custom_command(TARGET MirkoController
         POST_BUILD
-        COMMAND arm-none-eabi-objcopy -O ihex MirkoController.elf ${PROJECT_NAME}.hex
-        COMMAND arm-none-eabi-objcopy -O binary MirkoController.elf ${PROJECT_NAME}.bin
+        COMMAND /opt/arm-gnu-toolchain/bin/arm-none-eabi-objcopy -O ihex MirkoController.elf ${PROJECT_NAME}.hex
+        COMMAND /opt/arm-gnu-toolchain/bin/arm-none-eabi-objcopy -O binary MirkoController.elf ${PROJECT_NAME}.bin
 )

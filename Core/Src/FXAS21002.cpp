@@ -63,21 +63,28 @@ void Sensors::FXAS21002::readGyroData() {
     if (err != HAL_OK) {
         // Error Handling here
     }
+    int32_t raw_x = ((buffer[0] << 8) | buffer[1]);
+    int32_t raw_y = ((buffer[2] << 8) | buffer[3]);
+    int32_t raw_z = ((buffer[4] << 8) | buffer[5]);
+    // 2's complement
+    raw_x = raw_x & 0x8000 ? -((~raw_x +1)&0xFFFF): raw_x;
+    raw_y = raw_y & 0x8000 ? -((~raw_y +1)&0xFFFF): raw_y;
+    raw_z = raw_z & 0x8000 ? -((~raw_z +1)&0xFFFF): raw_z;
     if (currentGyroRange == FXAS21002GyroRange::GYRO_RANGE_2000) {
-        gyroSI.x = (float) ((buffer[0] << 8) | buffer[1]) * FXAS21002_DPS_LSB_2000;
-        gyroSI.y = (float) ((buffer[2] << 8) | buffer[3]) * FXAS21002_DPS_LSB_2000;
-        gyroSI.z = (float) ((buffer[4] << 8) | buffer[5]) * FXAS21002_DPS_LSB_2000;
+        gyroSI.x = (float) raw_x * FXAS21002_DPS_LSB_2000;
+        gyroSI.y = (float) raw_y * FXAS21002_DPS_LSB_2000;
+        gyroSI.z = (float) raw_z * FXAS21002_DPS_LSB_2000;
     } else if (currentGyroRange == FXAS21002GyroRange::GYRO_RANGE_1000) {
-        gyroSI.x = (float) ((buffer[0] << 8) | buffer[1]) * FXAS21002_DPS_LSB_1000;
-        gyroSI.y = (float) ((buffer[2] << 8) | buffer[3]) * FXAS21002_DPS_LSB_1000;
-        gyroSI.z = (float) ((buffer[4] << 8) | buffer[5]) * FXAS21002_DPS_LSB_1000;
+        gyroSI.x = (float) raw_x * FXAS21002_DPS_LSB_1000;
+        gyroSI.y = (float) raw_y * FXAS21002_DPS_LSB_1000;
+        gyroSI.z = (float) raw_z * FXAS21002_DPS_LSB_1000;
     } else if (currentGyroRange == FXAS21002GyroRange::GYRO_RANGE_500) {
-        gyroSI.x = (float) ((buffer[0] << 8) | buffer[1]) * FXAS21002_DPS_LSB_500;
-        gyroSI.y = (float) ((buffer[2] << 8) | buffer[3]) * FXAS21002_DPS_LSB_500;
-        gyroSI.z = (float) ((buffer[4] << 8) | buffer[5]) * FXAS21002_DPS_LSB_500;
+        gyroSI.x = (float) raw_x * FXAS21002_DPS_LSB_500;
+        gyroSI.y = (float) raw_y * FXAS21002_DPS_LSB_500;
+        gyroSI.z = (float) raw_z * FXAS21002_DPS_LSB_500;
     } else if (currentGyroRange == FXAS21002GyroRange::GYRO_RANGE_250) {
-        gyroSI.x = (float) ((buffer[0] << 8) | buffer[1]) * FXAS21002_DPS_LSB_250;
-        gyroSI.y = (float) ((buffer[2] << 8) | buffer[3]) * FXAS21002_DPS_LSB_250;
-        gyroSI.z = (float) ((buffer[4] << 8) | buffer[5]) * FXAS21002_DPS_LSB_250;
+        gyroSI.x = (float) raw_x * FXAS21002_DPS_LSB_250;
+        gyroSI.y = (float) raw_y * FXAS21002_DPS_LSB_250;
+        gyroSI.z = (float) raw_z * FXAS21002_DPS_LSB_250;
     }
 }
