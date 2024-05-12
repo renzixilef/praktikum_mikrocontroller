@@ -12,7 +12,6 @@ namespace Sensors {
             static SensorManager instance;
             return instance;
         }
-
         void initSensors(const std::shared_ptr<I2C_HandleTypeDef>& i2c_dev);
         void readSensors();
         inline FXOS8700Data& getMagData(){return magAndAccSensor->magMicroT;}

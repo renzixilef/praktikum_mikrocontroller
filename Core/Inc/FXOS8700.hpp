@@ -32,7 +32,7 @@ namespace Sensors {
     enum class FXOS8700Mode{
         ACCELEROMETER = 0x00,
         MAGNETOMETER = 0x01,
-        BOTH = 0x02
+        BOTH = 0x03
     };
     enum class FXOS8700AccelRange{
         ACCEL_RANGE_2G = 0x00,

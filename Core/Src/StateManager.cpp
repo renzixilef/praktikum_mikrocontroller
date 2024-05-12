@@ -1,16 +1,16 @@
 #include "StateManager.hpp"
 
-void StateMachine::StateManager::pressButtonInterrupt() {
-    StateType currentStateStateType = currentState->getStateType();
-    if(currentStateStateType != StateType::STATE_NAUSEA && currentStateStateType!=StateType::STATE_SLEEP ){
-        StateCuddles().initState();
-    }
-}
-
 void StateMachine::StateManager::checkForStateTransition() {
+    StateType currentStateStateType = currentState->getStateType();
+    if(buttonInterrupt){
+        if(currentStateStateType != StateType::STATE_NAUSEA && currentStateStateType!=StateType::STATE_SLEEP ){
+            StateCuddles().initState();
+            buttonInterrupt = false;
+        }
+    }
     Sensors::SensorManager::getInstance().readSensors();
     StateType newState = currentState->checkState();
-    if (newState != currentState->getStateType()) {
+    if (newState != currentStateStateType) {
         switch (newState){
             case StateType::STATE_IDLE:
             default:

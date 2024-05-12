@@ -13,13 +13,13 @@ namespace StateMachine{
             static StateManager instance;
             return instance;
         }
+        bool buttonInterrupt = false;
         void checkForStateTransition();
-        void pressButtonInterrupt();
         StateManager(const StateManager&) = delete;
         StateManager& operator=(const StateManager&) = delete;
 
     private:
-        std::unique_ptr<State> currentState = nullptr;
+        std::unique_ptr<State> currentState = std::make_unique<StateIdle>();
         StateManager(){}
         ~StateManager() = default;
     };

@@ -7,19 +7,16 @@ Sensors::FXAS21002::FXAS21002(const std::shared_ptr<I2C_HandleTypeDef> &thisI2cD
 }
 
 void Sensors::FXAS21002::setStatus(Sensors::FXAS21002Status status) {
-    uint8_t buffer[2];
-    buffer[0] = FXAS21002_CTRL_REG1;
+    uint8_t buffer;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
+    err = HAL_I2C_Mem_Read(i2cDev.get(), FXAS21002_ID_TRANSMIT, FXAS21002_CTRL_REG1, I2C_MEMADD_SIZE_8BIT, &buffer, 1,
+                           HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, &buffer[1], 1, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        // Error Handling here
-    }
-    buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(status));
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 2, HAL_MAX_DELAY);
+    buffer = (buffer & 0xFC) | (static_cast<uint8_t>(status));
+    err = HAL_I2C_Mem_Write(i2cDev.get(), FXAS21002_ID_TRANSMIT, FXAS21002_CTRL_REG1, I2C_MEMADD_SIZE_8BIT, &buffer, 1,
+                            HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -30,19 +27,16 @@ void Sensors::FXAS21002::setGyroRange(Sensors::FXAS21002GyroRange range) {
     if (originalStatus == FXAS21002Status::ACTIVE) {
         setStatus(FXAS21002Status::STANDBY);
     }
-    uint8_t buffer[2];
-    buffer[0] = FXAS21002_CTRL_REG0;
+    uint8_t buffer;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
+    err = HAL_I2C_Mem_Read(i2cDev.get(), FXAS21002_ID_TRANSMIT, FXAS21002_CTRL_REG0, I2C_MEMADD_SIZE_8BIT, &buffer, 1,
+                           HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, &buffer[1], 1, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        // Error Handling here
-    }
-    buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(range));
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 2, HAL_MAX_DELAY);
+    buffer = (buffer & 0xFC) | (static_cast<uint8_t>(range));
+    err = HAL_I2C_Mem_Write(i2cDev.get(), FXAS21002_ID_TRANSMIT, FXAS21002_CTRL_REG0, I2C_MEMADD_SIZE_8BIT, &buffer, 1,
+                            HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -55,11 +49,8 @@ void Sensors::FXAS21002::readGyroData() {
     uint8_t buffer[6];
     buffer[0] = FXAS21002_OUT_X_MSB;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
-    if (err != HAL_OK) {
-        // Error Handling here
-    }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, buffer, 6, HAL_MAX_DELAY);
+    err = HAL_I2C_Mem_Read(i2cDev.get(), FXAS21002_ID_TRANSMIT, FXAS21002_OUT_X_MSB, I2C_MEMADD_SIZE_8BIT, buffer, 6,
+                           HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -67,9 +58,9 @@ void Sensors::FXAS21002::readGyroData() {
     int32_t raw_y = ((buffer[2] << 8) | buffer[3]);
     int32_t raw_z = ((buffer[4] << 8) | buffer[5]);
     // 2's complement
-    raw_x = raw_x & 0x8000 ? -((~raw_x +1)&0xFFFF): raw_x;
-    raw_y = raw_y & 0x8000 ? -((~raw_y +1)&0xFFFF): raw_y;
-    raw_z = raw_z & 0x8000 ? -((~raw_z +1)&0xFFFF): raw_z;
+    raw_x = raw_x & 0x8000 ? -((~raw_x + 1) & 0xFFFF) : raw_x;
+    raw_y = raw_y & 0x8000 ? -((~raw_y + 1) & 0xFFFF) : raw_y;
+    raw_z = raw_z & 0x8000 ? -((~raw_z + 1) & 0xFFFF) : raw_z;
     if (currentGyroRange == FXAS21002GyroRange::GYRO_RANGE_2000) {
         gyroSI.x = (float) raw_x * FXAS21002_DPS_LSB_2000;
         gyroSI.y = (float) raw_y * FXAS21002_DPS_LSB_2000;
