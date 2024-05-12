@@ -10,16 +10,16 @@ void Sensors::FXAS21002::setStatus(Sensors::FXAS21002Status status) {
     uint8_t buffer[2];
     buffer[0] = FXAS21002_CTRL_REG1;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID, &buffer[1], 1, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, &buffer[1], 1, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
     buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(status));
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID, buffer, 2, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 2, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -33,16 +33,16 @@ void Sensors::FXAS21002::setGyroRange(Sensors::FXAS21002GyroRange range) {
     uint8_t buffer[2];
     buffer[0] = FXAS21002_CTRL_REG0;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID, &buffer[1], 1, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, &buffer[1], 1, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
     buffer[1] = (buffer[1] & 0xFC) | (static_cast<uint8_t>(range));
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID, buffer, 2, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 2, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
@@ -55,11 +55,11 @@ void Sensors::FXAS21002::readGyroData() {
     uint8_t buffer[6];
     buffer[0] = FXAS21002_OUT_X_MSB;
     HAL_StatusTypeDef err;
-    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID, buffer, 1, 10);
+    err = HAL_I2C_Master_Transmit(i2cDev.get(), FXAS21002_ID_TRANSMIT, buffer, 1, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }
-    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID, buffer, 6, 10);
+    err = HAL_I2C_Master_Receive(i2cDev.get(), FXAS21002_ID_RECEIVE, buffer, 6, HAL_MAX_DELAY);
     if (err != HAL_OK) {
         // Error Handling here
     }

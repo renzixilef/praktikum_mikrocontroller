@@ -99,8 +99,10 @@ int main(void) {
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
     Sensors::SensorManager::getInstance().initSensors(std::make_shared<I2C_HandleTypeDef>(hi2c1));
-    StateMachine::StateManager &stateManagerInstance = StateMachine::StateManager::getInstance();
+    //StateMachine::StateManager &stateManagerInstance = StateMachine::StateManager::getInstance();
     Sensors::SensorManager &sensorInstance = Sensors::SensorManager::getInstance();
+    volatile HAL_StatusTypeDef errGyro;
+    volatile HAL_StatusTypeDef errMag;
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -112,7 +114,38 @@ int main(void) {
         Sensors::FXAS21002Data& gyroData = sensorInstance.getGyroData();
         Sensors::FXOS8700Data& magData = sensorInstance.getMagData();
         Sensors::FXOS8700Data& accData = sensorInstance.getAccData();
+        /*
+        uint8_t i;
+        for (i = 34; i < 128; i++) {
+            errGyro = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t) (i << 1), 1, 10);
+        if(errGyro == HAL_OK){
+            HAL_Delay(1000);
+        }
+        }
+        errGyro = HAL_I2C_IsDeviceReady(&hi2c1, FXAS21002_ID>>1, 10, HAL_MAX_DELAY);
+        */
+
+        //errMag = HAL_I2C_IsDeviceReady(&hi2c1, FXOS8700_ID >> 1, 10, HAL_MAX_DELAY);
         HAL_Delay(1000);
+        /*
+        uint8_t buffer[2];
+        buffer[0] = FXOS8700_CTRL_REG1;
+        HAL_StatusTypeDef err;
+        err = HAL_I2C_Master_Transmit(&hi2c1, FXOS8700_ID, buffer, 1, 10);
+        if (err != HAL_OK) {
+            // Error Handling here
+        }
+        err = HAL_I2C_Master_Receive(&hi2c1, FXOS8700_ID, &buffer[1], 1, 10);
+        if (err != HAL_OK) {
+            // Error Handling here
+        }
+        buffer[0] = 0x2B;
+        buffer[1] = 64;
+        err = HAL_I2C_Master_Transmit(&hi2c1, FXOS8700_ID, buffer, 2, 10);
+        if (err != HAL_OK) {
+            // Error Handling here
+        }
+        HAL_Delay(1000);*/
         /* USER CODE BEGIN 3 */
 
     }

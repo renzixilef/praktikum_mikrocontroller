@@ -20,7 +20,8 @@
 #define FXOS8700_CTRL_REG1 (0x2A)
 #define FXOS8700_M_CTRL_REG1 (0x5B)
 #define FXOS8700_XYZ_DATA_CFG (0x0E)
-#define FXOS8700_ID (0xC7)
+#define FXOS8700_ID_TRANSMIT (0x1F<<1)
+#define FXOS8700_ID_RECEIVE ((0x1F<<1)|0x01)
 
 namespace Sensors {
 

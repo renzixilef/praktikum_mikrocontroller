@@ -61,6 +61,7 @@ target_compile_options(MirkoController PRIVATE
         -Wall
         -g3
         $<$<CONFIG:Debug>:-Os>
+        -Os
 )
 
 target_link_options(MirkoController PRIVATE
@@ -75,6 +76,7 @@ target_link_options(MirkoController PRIVATE
         -static
         -lc
         -lm
+        -Os
 )
 
 add_custom_command(TARGET MirkoController

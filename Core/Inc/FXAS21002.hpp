@@ -12,7 +12,8 @@
 
 
 // general
-#define FXAS21002_ID (0xD7)
+#define FXAS21002_ID_TRANSMIT (0x21<<1)
+#define FXAS21002_ID_RECEIVE ((0x21<<1)|0x01)
 #define FXAS21002_CTRL_REG0 (0x0D)
 #define FXAS21002_CTRL_REG1 (0x13)
 
