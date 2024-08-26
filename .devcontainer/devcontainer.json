@@ -18,8 +18,5 @@
     "-v", "/run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix",
     "-v", "/run/desktop/mnt/host/wslg:/mnt/wslg",
   ],
-  "mounts": ["type=bind,source=/dev/bus/usb,target=/dev/bus/usb"],
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
-  }
+  "mounts": ["type=bind,source=/dev/bus/usb,target=/dev/bus/usb"]
 }
