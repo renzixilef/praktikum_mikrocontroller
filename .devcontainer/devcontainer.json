@@ -16,7 +16,7 @@
     "--privileged",
     "-v", "/dev/usb:/dev/usb",
     "-v", "/run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix",
-    "-v", "/run/desktop/mnt/host/wslg:/mnt/wslg",
+    "-v", "/run/desktop/mnt/host/wslg:/mnt/wslg"
   ],
   "mounts": ["type=bind,source=/dev/bus/usb,target=/dev/bus/usb"]
 }
