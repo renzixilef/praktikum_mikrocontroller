@@ -25,9 +25,6 @@ RUN apt-get install -y openocd
 
 ENV PATH="/opt/arm-gnu-toolchain/bin:${PATH}"
 
-RUN cmake -B /workspace/build -S /workspace
-RUN cmake --build /workspace/build
-
 WORKDIR /workspace
 
 

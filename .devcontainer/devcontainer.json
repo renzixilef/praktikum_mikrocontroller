@@ -1,5 +1,7 @@
 {
   "name": "Praktikum_Mikrocontroller",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
   "build": {
     "dockerfile": "Dockerfile"
   },
