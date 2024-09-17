@@ -89,7 +89,7 @@ void Sensors::FXOS8700::readAccelData() {
     }
     int32_t raw_x = ((buffer[0] << 6) | (buffer[1] & FXOS8700_6_BIT_MASK));
     int32_t raw_y = ((buffer[2] << 6) | (buffer[3] & FXOS8700_6_BIT_MASK));
-    int32_t raw_z = ((buffer[4] << 6) | (buffer[1] & FXOS8700_6_BIT_MASK));
+    int32_t raw_z = ((buffer[4] << 6) | (buffer[5] & FXOS8700_6_BIT_MASK));
     // 2's complement
     raw_x = raw_x & 0x2000 ? -((~raw_x + 1) & 0x3FFF) : raw_x;
     raw_y = raw_y & 0x2000 ? -((~raw_y + 1) & 0x3FFF) : raw_y;
